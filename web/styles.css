@@ -1,0 +1,54 @@
+#mainForm > input {
+    text-align: center;
+}
+
+#mainForm > #text, #resForm > #resText {
+    font: bold medium "calibri";
+}
+
+#mainForm > p > input[type="text"] {
+    width: 5em;
+}
+
+#mainForm > input[type="button"] {
+    font: medium calibri;
+    margin:auto auto 2% auto;
+}
+
+#mainForm, #resForm{
+    margin-left: 35%;
+    margin-top: 5%;
+    width: 30%;
+    text-align: center;
+}
+
+#mainForm {
+    border: 2px groove grey;
+   /* background: aquamarine;*/
+}
+
+#resForm > p >label {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#mainTable {
+    border: 2px groove cornflowerblue;
+    width: 80%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 4ex;
+}
+
+
+th.border{
+    border-bottom: 2px solid cornflowerblue;
+    border-right: 2px solid cornflowerblue;
+}
+
+
+tr.lightRow{
+    background: skyblue;
+}
+
+

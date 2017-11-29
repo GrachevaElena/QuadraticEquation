@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binary Equation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script src="client.js"></script>
+</head>
+<body>
+    <form id="mainForm">
+        <p id="text">Введите коеффициенты квадратного уравнения:</p>
+        <p>
+            <input type="text" id="a"> x <sup>2</sup>+
+            <input type="text" id="b"> x+
+            <input type="text" id="c"> =0
+        </p>
+        <input type="button" value="Вычислить" onclick="CheckData()"></input>
+    </form>
+
+    <form id="resForm">
+    </form>
+
+    <table id="mainTable">
+        <caption>Таблица результатов</caption>
+        <tr>
+            <th class="border" colspan="3">Коеффициенты</th>
+            <th class="border" colspan="2">Корни</th>
+        </tr>
+        <tr >
+            <th class="border">a</th>
+            <th class="border">b</th>
+            <th class="border">c</th>
+            <th class="border">x<sub>1</sub></th>
+            <th class="border">x<sub>2</sub></th>
+        </tr>
+    </table>
+
+</body>
+</html>
