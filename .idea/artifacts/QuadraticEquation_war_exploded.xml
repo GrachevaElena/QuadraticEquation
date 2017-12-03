@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="QuadraticEquation:war exploded">
+    <output-path>$PROJECT_DIR$/target/ROOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="QuadraticEquation" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="QuadraticEquation-1.0.jar">
+            <element id="module-output" name="QuadraticEquation" />
+          </element>
+          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
+          <element id="library" level="project" name="Maven: junit:junit:4.10" />
+          <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.1" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/ROOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="QuadraticEquation/web/Web" />
+    </root>
+  </artifact>
+</component>

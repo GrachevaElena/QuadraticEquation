@@ -1,35 +1,48 @@
 package com.netcracker.server;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/server")
 public class MyServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        double a = Double.parseDouble(req.getParameter("a"));
-        double b = Double.parseDouble(req.getParameter("b"));
-        double c = Double.parseDouble(req.getParameter("c"));
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        double x1,x2;
+        JSONObject coeffs=(JSONObject)JSONValue.parse(req.getReader());
 
-        String s="";
+        double a = Double.parseDouble(coeffs.get("a").toString());
+        double b = Double.parseDouble(coeffs.get("b").toString());
+        double c = Double.parseDouble(coeffs.get("c").toString());
+
+        String x1, x2;
 
         double D=b*b-4*a*c;
         if (D>=0) {
-            x1=(-b+Math.sqrt(D))/(2*a);
-            x2=(-b-Math.sqrt(D))/(2*a);
-            s=s+x1+" "+x2;
+            Double _x1=(-b-Math.sqrt(D))/(2*a);
+            Double _x2=(-b+Math.sqrt(D))/(2*a);
+            x2=_x1.toString();
+            x1=_x2.toString();
         }
         else {
-            s="none"+" "+"none";
+            x1="none";
+            x2="none";
         }
-        resp.getWriter().write(s);
+         JSONObject res=new JSONObject();
+        res.put("x1", x1);
+        res.put("x2", x2);
+        res.writeJSONString(resp.getWriter());
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req,resp);
     }
 }

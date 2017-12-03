@@ -1,14 +1,16 @@
+var data;
+
 function CreateObjData(){
     var A = $("#a");
     var B = $("#b");
     var C = $("#c");
-    var data={a:A, b:B, c:C};
+    data={a:A, b:B, c:C};
     var coef=CheckData(data);
     if (coef!=undefined) SayError(coef);
     else SendRequest(data);
 }
 
-function CheckData(data) {
+function CheckData() {
     data.a = parseFloat(data.a.val());
     data.b = parseFloat(data.b.val());
     data.c = parseFloat(data.c.val());
@@ -39,25 +41,21 @@ function ShowFormRes(str){
     form.insertBefore(res,undefined);
 }
 
-function SendRequest(data){
-    alert(JSON.stringify(data));
-    var url="/server?json="+JSON.stringify(data);
-    var ajaxReq=new XMLHttpRequest();
-    ajaxReq.onreadystatechange=function(){
-        ShowRes(ajaxReq,data);
-    };
-    ajaxReq.open("GET", url, true);
-    ajaxReq.send("");
+function SendRequest(){
+    $.ajax({
+        url: "/server",
+        type: "POST",
+        data: JSON.stringify(data),
+        success: ShowRes,
+        dataType: "json",
+        error: ShowFormRes("Ошибка соединения с сервером")
+    })
 }
 
-function ShowRes(ajaxReq,data){
-    if (ajaxReq.readyState==4)
-        if (ajaxReq.status==200){
-            var arr=ajaxReq.responseText.split(' ');
-            ShowFormRes("Ответ:".italics()+" x"+"1".sub()+"="+arr[0]+", x"+"2".sub()+"="+arr[1]);
-            ShowTable(data,arr);
-        }
-        else ShowFormRes("Ошибка соединения с сервером");
+function ShowRes(ajaxReq) {
+    var res = {x1: ajaxReq["x1"], x2: ajaxReq["x2"]};
+    ShowFormRes("Ответ:".italics() + " x" + "1".sub() + "=" + res.x1 + ", x" + "2".sub() + "=" + res.x2);
+    ShowTable(data, res);
 }
 
 var nRows=0;
@@ -72,8 +70,8 @@ function ShowTable(data,res){
     td[0].innerHTML=data.a;
     td[1].innerHTML=data.b;
     td[2].innerHTML=data.c;
-    td[3].innerHTML=res[0];
-    td[4].innerHTML=res[1];
+    td[3].innerHTML=res.x1;
+    td[4].innerHTML=res.x2;
 
     row.id=nRows;
 

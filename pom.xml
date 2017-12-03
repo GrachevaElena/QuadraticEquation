@@ -9,15 +9,11 @@
     <artifactId>QuadraticEquation</artifactId>
     <version>1.0</version>
 
-    <url>http://localhost:8081/QuadraticEquation/quadrEquation.html</url>
     <build>
-        <finalName>QuadraticEquation</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webXml> web\WEB-INF\web.xml </webXml>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -25,10 +21,17 @@
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>

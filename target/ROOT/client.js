@@ -1,23 +1,29 @@
+var data;
+
+function CreateObjData(){
+    var A = $("#a");
+    var B = $("#b");
+    var C = $("#c");
+    data={a:A, b:B, c:C};
+    var coef=CheckData(data);
+    if (coef!=undefined) SayError(coef);
+    else SendRequest(data);
+}
+
 function CheckData() {
-    var a = $("#a");
-    var b = $("#b");
-    var c = $("#c");
-    a = parseFloat(a.val());
-    b = parseFloat(b.val());
-    c = parseFloat(c.val());
-    if (isNaN(a)) {
-        SayError("a");
-        return;
+    data.a = parseFloat(data.a.val());
+    data.b = parseFloat(data.b.val());
+    data.c = parseFloat(data.c.val());
+    if (isNaN(data.a)) {
+        return "a";
     }
-    if (isNaN(b)) {
-        SayError("b");
-        return;
+    if (isNaN(data.b)) {
+        return "b";
     }
-    if (isNaN(c)) {
-        SayError("c");
-        return;
+    if (isNaN(data.c)) {
+        return "c";
     }
-    SendRequest(a,b,c);
+    return undefined;
 }
 
 function SayError(coef){
@@ -35,28 +41,25 @@ function ShowFormRes(str){
     form.insertBefore(res,undefined);
 }
 
-function SendRequest(a,b,c){
-    var url="/server?a="+a+"&b="+b+"&c="+c;
-    var ajaxReq=new XMLHttpRequest();
-    ajaxReq.onreadystatechange=function(){
-        ShowRes(ajaxReq,a,b,c);
-    };
-    ajaxReq.open("GET", url, true);
-    ajaxReq.send("");
+function SendRequest(){
+    $.ajax({
+        url: "/server",
+        type: "POST",
+        data: JSON.stringify(data),
+        success: ShowRes,
+        dataType: "json",
+        error: ShowFormRes("Ошибка соединения с сервером")
+    })
 }
 
-function ShowRes(ajaxReq,a,b,c){
-    if (ajaxReq.readyState==4)
-        if (ajaxReq.status==200){
-            var arr=ajaxReq.responseText.split(' ');
-            ShowFormRes("Ответ:".italics()+" x"+"1".sub()+"="+arr[0]+", x"+"2".sub()+"="+arr[1]);
-            ShowTable(a,b,c,arr[0],arr[1]);
-        }
-        else ShowFormRes("Ошибка соединения с сервером");
+function ShowRes(ajaxReq) {
+    var res = {x1: ajaxReq["x1"], x2: ajaxReq["x2"]};
+    ShowFormRes("Ответ:".italics() + " x" + "1".sub() + "=" + res.x1 + ", x" + "2".sub() + "=" + res.x2);
+    ShowTable(data, res);
 }
 
 var nRows=0;
-function ShowTable(a,b,c,x1,x2){
+function ShowTable(data,res){
     var table=document.getElementById("mainTable");
     var row=document.createElement("tr");
     var td=[];
@@ -64,11 +67,11 @@ function ShowTable(a,b,c,x1,x2){
         td[i]=document.createElement("td");
         row.appendChild(td[i]);
     }
-    td[0].innerHTML=a;
-    td[1].innerHTML=b;
-    td[2].innerHTML=c;
-    td[3].innerHTML=x1;
-    td[4].innerHTML=x2;
+    td[0].innerHTML=data.a;
+    td[1].innerHTML=data.b;
+    td[2].innerHTML=data.c;
+    td[3].innerHTML=res.x1;
+    td[4].innerHTML=res.x2;
 
     row.id=nRows;
 
